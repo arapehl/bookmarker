@@ -1,0 +1,19 @@
+<h1>Bookmarks</h1>
+<h2>Add a bookmark</h2>
+<%= form_tag('/bookmarks') do %>
+  <%= url_field('bookmark', 'uri') %>
+  <%= submit_tag 'Save' %>
+<% end %>
+
+<h2>Bookmarks</h2>
+<ul>
+<% @bookmarks.each do |bookmark| %>
+  <li>
+    <%= form_tag("/bookmarks/#{bookmark.id}", method: :delete) do %>
+        <a href="<%= bookmark.uri %>"><%= bookmark.title %></a>
+        <p><%= bookmark.excerpt %></p>
+        <%= submit_tag 'Delete' %>
+    <% end %>
+  </li>
+<% end %>
+</ul>
