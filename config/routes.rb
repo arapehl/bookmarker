@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  get  'bookmarks/' => 'bookmarks#index'
-  post 'bookmarks/' => 'bookmarks#new'
-  delete 'bookmarks/:id' => 'bookmarks#delete'
+
+  root 'bookmarks#index'
+
+  resources :bookmarks, only: [:index, :new, :destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

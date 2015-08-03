@@ -1,4 +1,6 @@
 class BookmarksController < ApplicationController
+  require 'rubygems'
+  require 'readability'
   require 'open-uri'
 
   def index
@@ -7,9 +9,7 @@ class BookmarksController < ApplicationController
 
   def new
     uri = params['bookmark']['uri']
-    bookmark = Bookmark.create uri: uri
-    bookmark.title = 'Processing URL...'
-    bookmark.save
+    bookmark = Bookmark.create(uri: uri, title: 'Processing title...')
     CrawlUriJob.perform_later crawl_uri(uri, bookmark)
     redirect_to controller: 'bookmarks', action: 'index'
   end
@@ -22,9 +22,12 @@ class BookmarksController < ApplicationController
   private
 
   def crawl_uri(uri, bookmark)
-    page = Nokogiri::HTML(open(uri))
+    source = open(uri)
+    content = Readability::Document.new(source.read).content
+    page = Nokogiri::HTML(source)
+
     bookmark.title = page.css('title')[0].text
-    bookmark.excerpt = page.css('body').text[0..500]
+    bookmark.excerpt = content #page.css('body').text[0..500]
     bookmark.save
   end
 

@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150603012907) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "accounts", force: :cascade do |t|
     t.string   "user"
     t.string   "password"
@@ -30,6 +33,7 @@ ActiveRecord::Schema.define(version: 20150603012907) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "bookmarks", ["account_id"], name: "index_bookmarks_on_account_id"
+  add_index "bookmarks", ["account_id"], name: "index_bookmarks_on_account_id", using: :btree
 
+  add_foreign_key "bookmarks", "accounts"
 end
