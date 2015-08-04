@@ -2,7 +2,7 @@ class BookmarksController < ApplicationController
   before_action :authenticate_account!
 
   def index
-    @bookmarks = Bookmark.all.reverse
+    @bookmarks = current_account.bookmarks.all.order('created_at DESC')
   end
 
   def create
@@ -16,8 +16,4 @@ class BookmarksController < ApplicationController
     Bookmark.delete(params[:id])
     redirect_to bookmarks_path
   end
-
-  private
-
-
 end

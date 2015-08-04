@@ -5,12 +5,14 @@ class CrawlUriJob < ActiveJob::Base
 
   queue_as :default
 
+  include ActionView::Helpers::SanitizeHelper
+
   def perform(uri, bookmark)
     source = open(uri).read
     doc = Readability::Document.new(source)
+    words = strip_tags(doc.content).split(' ')
+    excerpt = words[0..50].join(' ')
 
-    bookmark.title = doc.title
-    bookmark.excerpt = doc.content
-    bookmark.save
+    bookmark.update(title: doc.title, excerpt: "#{ excerpt }...")
   end
 end

@@ -11,9 +11,16 @@
 <% @bookmarks.each do |bookmark| %>
   <li>
     <%= form_tag("/bookmarks/#{bookmark.id}", method: :delete) do %>
+      <h3>
         <a href="<%= bookmark.uri %>"><%= bookmark.title %></a>
-        <p><%= bookmark.excerpt %></p>
+      </h3>
+      <p>
+        <%= bookmark.excerpt %><br>
+      </p>
+      <p>
+        <%= bookmark.created_at %>
         <%= submit_tag 'Delete' %>
+      </p>
     <% end %>
   </li>
 <% end %>
