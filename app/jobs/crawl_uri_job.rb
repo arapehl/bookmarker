@@ -6,7 +6,6 @@ class CrawlUriJob < ActiveJob::Base
   queue_as :default
 
   def perform(uri, bookmark)
-    binding.pry
     source = open(uri).read
     doc = Readability::Document.new(source)
 
