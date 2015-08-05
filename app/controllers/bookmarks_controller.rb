@@ -1,8 +1,16 @@
 class BookmarksController < ApplicationController
   before_action :authenticate_account!
 
+  respond_to :html
+  respond_to :json
+
   def index
     @bookmarks = current_account.bookmarks.all.order('created_at DESC')
+    respond_with @bookmarks do |format|
+      format.json do
+        render json: @bookmarks
+      end
+    end
   end
 
   def create
