@@ -7,21 +7,17 @@
 <% end %>
 
 <h2>Bookmarks</h2>
-<ul>
 <% @bookmarks.each do |bookmark| %>
-  <li>
-    <%= form_tag("/bookmarks/#{bookmark.id}", method: :delete) do %>
-      <h3>
-        <a href="<%= bookmark.uri %>"><%= bookmark.title %></a>
-      </h3>
-      <p>
-        <%= bookmark.excerpt %><br>
-      </p>
-      <p>
-        <%= bookmark.created_at %>
-        <%= submit_tag 'Delete' %>
-      </p>
-    <% end %>
-  </li>
+<%= form_tag("/bookmarks/#{bookmark.id}", method: :delete) do %>
+  <h3>
+    <a href="<%= bookmark.uri %>"><%= bookmark.title %></a>
+  </h3>
+  <p>
+    <small>Created: <%= bookmark.created_at.strftime('%b %-d, %Y, %l:%-M') %></small>
+    <%= submit_tag 'Delete' %>
+  </p>
+  <p>
+    <%= bookmark.excerpt %><br>
+  </p>
 <% end %>
-</ul>
+<% end %>
