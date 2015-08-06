@@ -11,6 +11,7 @@ gem 'pg'
 gem 'puma'
 gem 'rails_12factor'
 
+gem 'sidekiq'
 gem 'devise'
 
 # Use SCSS for stylesheets
